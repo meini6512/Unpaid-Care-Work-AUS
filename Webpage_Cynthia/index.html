@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gender Gaps in Unpaid Care Work</title>
+
+    <!-- scroll and animation libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    
+    <!-- charting libraries -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/pictorial.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.35.0/plotly.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bayon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- main scroll container, used by locomotive scroll -->
+    <div class="container" id="main-container">
+
+        <!-- hero title page -->
+        <section class="title-page theme-dark">
+            <div class="hero-inner">
+                <p class="hero-eyebrow">Data Insights &mdash; Australia &mdash; 2021&ndash;2022</p>
+                <h1 class="hero-headline">
+                    <span class="hero-line"><span class="hero-word">GENDER GAPS</span></span>
+                    <span class="hero-line"><span class="hero-word">IN UNPAID</span></span>
+                    <span class="hero-line"><span class="hero-word">DOMESTIC</span></span>
+                    <span class="hero-line"><span class="hero-word">CARE WORK</span></span>
+
+                </h1>
+            </div>
+        </section>
+
+        <!-- subtitle page with scrolling ticker -->
+        <section class="subtitle-page theme-light">
+            <div class="subtitle-inner">
+                <p class="subtitle-tag">The Hidden Labor</p>
+                <h2 class="subtitle-headline">
+                    <span class="sub-word">An exploration of structural inequality,</span>
+                    <span class="sub-word">invisible labor, and the personal</span>
+                    <span class="sub-word">sacrifices behind everyday caregiving.</span>
+                </h2>
+                <div class="subtitle-ticker">
+                    <span>Caregiving is universal</span>
+                    <span class="ticker-dot">&#9679;</span>
+                    <span>72% of primary carers are women</span>
+                    <span class="ticker-dot">&#9679;</span>
+                    <span>women's work is still undervalued</span>
+                    <span class="ticker-dot">&#9679;</span>
+                    <span> Hindering career opportunities</span>
+                    <span class="ticker-dot">&#9679;</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- horizontal scroll pin section introducing mia -->
+        <section id="storyPin" class="pin-section theme-dark">
+            <div class="pin-wrap">
+                
+                <!-- slide 1: mia introduction with portrait image -->
+                <div class="horizontal-slide mia-cry" style="background-image: url('images/mia_cry.jpg');">
+                    <div class="story-container">
+                        <h1 class="story-title">
+                            This is Mia, <span class="story-subtitle"> she is in her late 30s, living at home with her ageing parents and taking care of them full-time.</span>
+                        </h1>
+                        <div class="story-body">
+                            <p>The atmosphere feels burdened, as if the room itself is tired...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- slide 2: mia's dreams and sense of loss -->
+                <div class="horizontal-slide mia-dreams" style="background-image: url('images/window.jpg');">
+                    <div class="dream-container">
+                        <p class="dream-subtitle">
+                            Caregiving has gradually consumed most of her adult life.<br><br>
+                            She has dreams that extend beyond this home—study, career, independence.<br><br>
+                            But every day, those possibilities feel further away...
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- impact statement bridging mia's story to the data -->
+        <section class="impact-statement theme-dark">
+            <div class="impact-inner">
+                <p class="impact-tag">The Reality</p>
+                <h2 class="impact-headline">
+                    <span class="impact-line">Caregiving is universal,</span>
+                    <span class="impact-line">but not evenly shared.</span>
+                </h2>
+            </div>
+        </section>
+
+        <!-- area chart: weekly unpaid domestic work hours by gender -->
+        <section id="graph-weekly-hours" class="weekly-hours theme-light">
+            <div class="page-content column-layout">
+                <p class="label">AUSTRALIA (2021)</p> 
+                <h3 class="area-chart-title">Weekly hours of unpaid domestic work</h3>
+                <div id="areaChart" class="chart-box">
+                    <span><p class="area-chart-subtitle">The percentage shows the proportion of total males/females in a specific<br>workload category.</p></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- pull quote from the australian government gender equality strategy -->
+        <section class="quote theme-light">
+            <div class="page-content">
+                <div class="quote-container">
+                    <p class="quote-subtitle">
+                        "Equality cannot be achieved without addressing who takes on, and who is expected to take on, caring responsibilities."<br><br>
+                        <span class="citation-text">---Australian Government, Working for Women: A Strategy for Gender Equality</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- pictorial chart: carer demographics filtered by type and age group -->
+        <section id="graph-carers" class="carers theme-light">
+            <div class="page-content column-layout">
+                <p class="label">AUSTRALIA (2022)</p> 
+                <h3 class="pictorial-chart-title">Carers in Australia</h3>
+                
+                <!-- dropdown filters for carer type and age group -->
+                <div class="controls">
+                    <select id="typeSelect">
+                        <option value="Primary carers">Primary carers</option>
+                        <option value="Secondary carers">Secondary carers</option>
+                        <option value="Total carers">Total carers</option>
+                    </select>
+            
+                    <select id="ageSelect">
+                        <option value="Total">Total</option>
+                        <option value="Under 15">Under 15</option>
+                        <option value="15–24">15–24</option>
+                        <option value="25–34">25–34</option>
+                        <option value="35–44">35–44</option>
+                        <option value="45–54">45–54</option>
+                        <option value="55–64">55–64</option>
+                        <option value="65–74">65–74</option>
+                        <option value="75+">75+</option>
+                    </select>
+                </div>
+
+                <div class="carers-chart-text">
+                    <!-- highcharts pictorial chart -->
+                    <div id="pictorialChart" class="chart-box"></div>
+
+                    <!-- note shown only for primary carers aged 35 to 44 (mia's group) -->
+                    <div id="miaPictorialNote" class="mia-pictorial-note">
+                        <span class="mia-note-tag">Mia</span>
+                        <p class="mia-note-text">
+                            Mia is in this group, where women aged 35 to 44 make up 80% of all primary carers.
+                        </p>
+                        <p class="mia-note-subtext">
+                            This lifestage shows the largest gender gap.
+                        </p>
+                    </div>
+
+                    <!-- note defining primary and secondary carers -->
+                    <div id="PictorialNote" class="pictorial-note">
+                        <span class="note-tag">Two types of carers</span>
+                        <p class="note-text">
+                            Primary carers:
+                        </p>
+                        <p class="note-subtext">
+                            Those responsible for most of a person's everyday care. (often like a full-time job at home).
+                        </p>
+
+                        <br>
+                        
+                        <p class="note-text">
+                            Secondary carers:
+                        </p>
+                        <p class="note-subtext">
+                            Those who assist with care but do not hold primary responsibility.
+                        </p>
+                    </div>
+
+                    <!-- instructional prompt guiding users to explore mia's demographic -->
+                    <div id="PictorialInstruction" class="pictorial-instruction">
+                        <span class="pictorial-instruction-tag">Try this!</span>
+                        <p class="pictorial-instruction-text">
+                            Select "Primary carers" and "35-44" for age group to see Mia's demographic group.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- horizontal scroll pin section about employment and caregiving -->
+        <section id="employmentPin" class="pin-section theme-light">
+            <div class="pin-wrap">
+
+                <!-- slide 1: mia's experience with unemployment -->
+                <div class="horizontal-slide mia-unemployed" style="background-image: url('images/laptop.jpg');">
+                    <div class="unemployed-container">
+                        <p class="unemployed-text">After years of house work, Mia no longer checks job listings with confidence.</p>
+                        <p class="quote-text">"Sorry, we're looking for someone with recent experience."</p>
+                        <br>
+                        <br>
+                        <p class="unemployed-text">Late at night, exhausted, she stares quietly at her laptop screen.</p>
+                        <p class="quote-text">"Why do I have to be here?"</p>
+                        <p class="quote-text">"This is unfair."</p>
+                    </div>
+                </div>
+
+                <!-- slide 2: plotly gauge charts showing care hours and employment rates -->
+                <div class="horizontal-slide employment">
+                    <div class="employment-container">
+                        <p class="label">AUSTRALIA (2022)</p> 
+                        <h3 class="gauge-chart-title">Longer caregiving hours, lower employment rates
+                            <span><p class="gauge-chart-subtitle">Unpaid caregivers providing intensive care are less likely to work full-time.<br>Adjust the working hours below to explore their impact.</p></span>
+                        </h3>
+                        
+                        <!-- two gauge charts -->
+                        <div class="employment-gauge-container">
+                            <div id="hoursGauge"></div>
+                            <div id="employmentGauge"></div>
+                        </div>
+            
+                        <!-- button controls -->
+                        <div class="gauge-button-controls">
+                            <button id="decreaseTime" class="gauge-btn">— Hours</button>
+                            <div id="currentLabel" class="gauge-status-label">Less than 20 hours</div>
+                            <button id="increaseTime" class="gauge-btn">+ Hours</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- explanation of the gauge chart -->
+        <section>
+            <div class="gauge-explain">
+                 <p class="gauge-explain-title">What happened?</p>
+                <p class="gauge-explain-text">
+                    When primary carers provide under 20 hours of care, their employment rate is high at 71.6%, but this falls to 45.4% when caregiving exceeds 40 hours.
+                </p>
+            </div>
+        </section>>
+
+        <!-- mia quote reflecting on the lack of choice in taking on care -->
+        <section class="mia-reasons theme-light">
+            <div class="page-content">
+                <div class="mia-reasons-container">
+                    <p class="mia-reasons-subtitle">
+                        "I didn't really have a choice. If I don't take care of them, no one will."
+                    </p>
+            </div>
+            </div>
+        </section>
+
+        <!-- radar chart: reasons people take on a caring role -->
+        <section id="graph-radar" class="radar theme-light">
+            <div class="page-content column-layout">
+                <p class="label">AUSTRALIA (2022)</p> 
+                <h3 class="radar-chart-title">Reasons for taking on caring role</h3>
+                <div id="radarChart" class="radar-chart"></div>
+            </div>
+        </section>
+
+        <!-- conclusion section wrapping up the narrative -->
+        <section id="conclusion" class="conclusion theme-dark">
+            <div class="page-content">
+                <div class="conclusion-container">
+                    <h2 class="conclusion-title">So, What Does This Tell Us?</h2>
+                    <p class="conclusion-text">
+                        It is hard to ignore that in Australia, women make up the majority of primary carers, often working long unpaid hours at home while facing reduced employment opportunities.
+                        <br>
+                        This gender inequality in unpaid care work is shaped by society's deep gendered assumptions, leaving people like Mia to carry responsibilities that it has yet to fairly recognise or support.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
